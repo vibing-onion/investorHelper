@@ -29,13 +29,18 @@
         </div>
       </div>
     </nav>
-    <form action='/search_cik_result', method='POST'>
+    <form action='/search_company_result', method='POST'>
       <h2 class="mb-3">
         {{message}}
       </h2>
+      <label for="searchMethod">Search by:</label>
+      <select class="form-select" name="searchMethod">
+        <option value="CIK number">CIK number</option>
+        <option value="Ticker">Ticker</option>
+      </select>
       <div class="mb-3">
-        <label for="tickerInput" class="form-label">Ticker</label>
-        <input type="text" class="form-control" id="tickerInput" name="tickerInput">
+        <label for="companyInput" class="form-label">Company</label>
+        <input type="text" class="form-control" id="companyInput" name="companyInput">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

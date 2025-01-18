@@ -29,15 +29,34 @@
         </div>
       </div>
     </nav>
-    <form action='/search_cik_result', method='POST'>
+    <form action='/search_cik_result'>
       <h2 class="mb-3">
-        {{message}}
+        Company Facts
       </h2>
-      <div class="mb-3">
-        <label for="tickerInput" class="form-label">Ticker</label>
-        <input type="text" class="form-control" id="tickerInput" name="tickerInput">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h3 style="text-decoration: underline;">Company Facts</h3>
+          <table class="table">
+            <tbody>
+              <tr><th scope="row">CIK Number</th><td>CIK{{client_info.cik.zfill(10)}}</td>
+              </tr>
+              <tr><th scope="row">Company Name</th><td>{{client_info.name}}</td>
+              </tr>
+              <tr><th scope="row">Tickers</th><td>{{client_info.tickers}}</td>
+              </tr>
+              <tr><th scope="row">SIC Code</th><td>{{client_info.sic}}</td>
+              </tr>
+              <tr><th scope="row">SIC Industry</th><td>{{client_info.sicDescription}}</td>
+              </tr>
+              <tr><th scope="row">Sector</th><td>{{client_info.ownerOrg}}</td>
+              </tr>
+              <tr><th scope="row">Exchanges</th><td>{{client_info.exchanges}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <a href="/search_company" class="btn btn-primary">Search again</a>
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </body> 
 </html> 
