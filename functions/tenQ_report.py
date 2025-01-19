@@ -49,9 +49,12 @@ def get_company_info_by_CIK(cik) -> dict:
             client_info[key] = ", ".join(list(set(res[key])))
         contact_info = {
             "mailing_address" : res['addresses']['mailing'],
-            "business_address" : res['addresses']['business'],
             "phone" : res['phone']
         }
+        with open('functions/data/countrycode_mapping.json', 'r') as f:
+            countrycode = json.load(f)
+            f.close()
+        contact_info["mailing_address"]["Country_Region"] = countrycode[contact_info["mailing_address"]["stateOrCountry"]]
         
         return {"client_info": client_info, "contact_info": contact_info}
     except:

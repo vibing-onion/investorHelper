@@ -33,28 +33,51 @@
       <h2 class="mb-3">
         Company Facts
       </h2>
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h3 style="text-decoration: underline;">Company Facts</h3>
-          <table class="table">
-            <tbody>
-              <tr><th scope="row">CIK Number</th><td>CIK{{client_info.cik.zfill(10)}}</td>
-              </tr>
-              <tr><th scope="row">Company Name</th><td>{{client_info.name}}</td>
-              </tr>
-              <tr><th scope="row">Tickers</th><td>{{client_info.tickers}}</td>
-              </tr>
-              <tr><th scope="row">SIC Code</th><td>{{client_info.sic}}</td>
-              </tr>
-              <tr><th scope="row">SIC Industry</th><td>{{client_info.sicDescription}}</td>
-              </tr>
-              <tr><th scope="row">Sector</th><td>{{client_info.ownerOrg}}</td>
-              </tr>
-              <tr><th scope="row">Exchanges</th><td>{{client_info.exchanges}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <a href="/search_company" class="btn btn-primary">Search again</a>
+      <div style='display:flex;'>
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h3 style="text-decoration: underline;">Company Facts</h3>
+            <table class="table">
+              <tbody>
+                <tr><th scope="row">CIK Number</th><td>CIK{{client_info.cik.zfill(10)}}</td>
+                </tr>
+                <tr><th scope="row">Company Name</th><td>{{client_info.name}}</td>
+                </tr>
+                <tr><th scope="row">Tickers</th><td>{{client_info.tickers}}</td>
+                </tr>
+                <tr><th scope="row">SIC Code</th><td>{{client_info.sic}}</td>
+                </tr>
+                <tr><th scope="row">SIC Industry</th><td>{{client_info.sicDescription}}</td>
+                </tr>
+                <tr><th scope="row">Sector</th><td>{{client_info.ownerOrg}}</td>
+                </tr>
+                <tr><th scope="row">Exchanges</th><td>{{client_info.exchanges}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <a href="/search_company" class="btn btn-primary">Search again</a>
+          </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h3 style="text-decoration: underline;">Company Contact</h3>
+            <table class="table">
+              <tbody>
+                <tr><th scope="row">Street1</th><td>{{contact_info.mailing_address.street1}}</td>
+                </tr>
+                <tr><th scope="row">Street2</th><td>{{contact_info.mailing_address.street2}}</td>
+                </tr>
+                <tr><th scope="row">City</th><td>{{contact_info.mailing_address.city}}</td>
+                </tr>
+                <tr><th scope="row">Country/Region</th><td>{{contact_info.mailing_address.Country_Region}}</td>
+                </tr>
+                <tr><th scope="row">Zip Code</th><td>{{contact_info.mailing_address.zipCode}}</td>
+                </tr>
+                <tr><th scope="row">Phone NO.</th><td>{{contact_info.phone}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </form>
