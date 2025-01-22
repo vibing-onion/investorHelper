@@ -29,15 +29,48 @@
         </div>
       </div>
     </nav>
-    <form action='/search_cik_result', method='POST'>
+    <form>
       <h2 class="mb-3">
-        {{message}}
+        Historical 10Q
       </h2>
-      <div class="mb-3">
-        <label for="tickerInput" class="form-label">Ticker</label>
-        <input type="text" class="form-control" id="tickerInput" name="tickerInput">
+      <div style='display:flex;'>
+        <div class="card" style="width: 100%;">
+          <div class="card-body">
+            <h3 style="text-decoration: underline;">Financials</h3>
+            <table class="table" style='display: flex'>
+              <tbody>
+                <tr>
+                  <th 
+                    class = "table-secondary table-bordered border-dark"
+                    style='height: 60px;font-size: 15px; overflow:scroll;display: block'>Time</th>
+                </tr>
+                {% for key in data['data'].keys() %}
+                <tr>
+                  <th
+                    class = "table-secondary table-bordered border-secondary"
+                    style='height: 60px;font-size: 15px; overflow:scroll;display: block'>{{key}}</th>
+                </tr>
+                {% endfor %}
+              </tbody>
+              <tbody style='overflow: scroll'>
+                <tr>
+                    {% for i in range(0, len) %}
+                    <td class = "table-secondary table-bordered border-dark">{{data['time'][i]}}</td>
+                    {% endfor %}
+                </tr>
+                {% for key in data['data'].keys() %}
+                <tr>
+                    {% for k, val in data['data'][key].items() %}
+                    <td class = "table-light table-bordered border-secondary">{{val}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <a href="/historical_10Q" class="btn btn-primary">Search again</a>
+          </div>
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </body> 
 </html> 

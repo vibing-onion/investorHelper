@@ -29,15 +29,19 @@
         </div>
       </div>
     </nav>
-    <form action='/search_cik_result', method='POST'>
+    <form>
       <h2 class="mb-3">
-        {{message}}
+        Company Facts
       </h2>
-      <div class="mb-3">
-        <label for="tickerInput" class="form-label">Ticker</label>
-        <input type="text" class="form-control" id="tickerInput" name="tickerInput">
+      <div style='display:flex;'>
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h3 style="text-decoration: underline;">Historical 10Q</h3>
+            
+            <a href="/search_company" class="btn btn-primary">Search again</a>
+          </div>
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </body> 
 </html> 

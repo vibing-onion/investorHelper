@@ -1,4 +1,4 @@
-from functions.tenQ_report import get_ticker_cik_mapping, get_company_info_by_CIK, get_company_info_by_ticker
+from functions.tenQ_report import get_ticker_cik_mapping, get_company_info_by_CIK, get_company_info_by_ticker, get_10Q_report_by_CIK, get_10Q_report_by_ticker
 from functions.cik_mapping import get_mapping
 
 def initialize_api():
@@ -18,3 +18,10 @@ def search_company_api(company, search_method):
     else:
         company_info = get_company_info_by_ticker(company)
     return company_info
+
+def historical_10Q_api(company, search_method):
+    if search_method == "CIK number":
+        historical_10Q = get_10Q_report_by_CIK(company)
+    else:
+        historical_10Q = get_10Q_report_by_ticker(company)
+    return historical_10Q

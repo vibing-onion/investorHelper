@@ -22,16 +22,16 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><a class="dropdown-item" href="/search_cik">CIK lookup</a></li>
                 <li><a class="dropdown-item" href="/search_company">Company Facts</a></li>
-                <li><a class="dropdown-item" href="#">Latest 10Q</a></li>
+                <li><a class="dropdown-item" href="/historical_10Q">Historical 10Q</a></li>
               </ul>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <form action='/search_company_result', method='POST'>
+    <form action={{message["action"]}} method='POST'>
       <h2 class="mb-3">
-        {{message}}
+        {{message["heading"]}}
       </h2>
       <label for="searchMethod">Search by:</label>
       <select class="form-select" name="searchMethod">
@@ -45,4 +45,4 @@
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </body> 
-</html> 
+</html>

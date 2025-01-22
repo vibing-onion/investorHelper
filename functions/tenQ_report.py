@@ -3,6 +3,9 @@ import json
 from dotenv import load_dotenv
 import os
 import pandas as pd
+from datetime import datetime
+
+from functions.data_wrangle import historical_10Q_dw, historical_10Q_merge
 
 def get_ticker_cik_mapping(ticker_list):
     try:
@@ -67,26 +70,41 @@ def get_company_info_by_ticker(ticker) -> dict:
         return {"client_info": None, "contact_info": None}
     return get_company_info_by_CIK(cik_mapping["ticker"])
 
-def get_latest_10Q_report(ticker):
-    
-    cik_mapping = get_ticker_cik_mapping([ticker])
-    env_var = load_env(api = "https://data.sec.gov/api/xbrl/companyfacts/", cik = cik_mapping["ticker"])
+def get_10Q_report_by_CIK(cik) -> dict:
+    env_var = load_env(api = "https://data.sec.gov/api/xbrl/companyfacts/", cik = cik)
     if env_var["url"] is None or env_var["headers"] is None:
         print("Error in loading environment variables, check .env file")
-        return
+        return {}
     
     try:
         res = requests.get(env_var["url"], headers=env_var["headers"]).json()
-        files = pd.DataFrame(res['facts']['dei']['EntityCommonStockSharesOutstanding']['units']['shares'])
-        info = pd.DataFrame(res['facts']['us-gaap'].keys())
-        ten_Q = files[files["form"] == '10-Q'].iloc[-1,:].loc[['val', 'accn', 'frame']]
+        data = res['facts']['us-gaap']
+        metadata = {
+            key: {
+                "label": data[key]["label"],
+                "description": data[key]["description"]
+            }
+            for key in data.keys()
+        }
+        result = {"metadata": metadata, "data": {}}
+        for key in metadata.keys():
+            for k in data[key]['units'].keys():
+                record_list = [{'val': item['val'], 'fileDate': item['filed'], 'fyfp': str(item['fy']) + item['fp'][1], 'endDate': item['end']} for item in data[key]['units'][k] if item['form'] == "10-Q"]
+            record_list = historical_10Q_dw(pd.DataFrame(record_list))
+            if len(record_list) < 4:
+                continue
+            result["data"][key] = record_list
+        result['data'], result['time'] = historical_10Q_merge(result['data'])
+        
+        print("10Q report loaded -- SUCCESS")
+        return result
+    
     except:
         print("Error in SEC API call, check API validity")
-        return
+        return {}
 
-    with open('functions/data/10Q_report_keys.json', 'w') as f:
-        json.dump(info.to_dict(), f)
-        f.close()
-    print(ten_Q)
-
-    print("10Q report download -- SUCCESS")
+def get_10Q_report_by_ticker(ticker) -> dict:
+    cik_mapping = get_ticker_cik_mapping([ticker])
+    if cik_mapping["ticker"] is None:
+        return {}
+    return get_10Q_report_by_CIK(cik_mapping["ticker"])

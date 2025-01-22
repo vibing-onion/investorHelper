@@ -10,7 +10,7 @@ for d in dir:
     sys.path.insert(0, os.getcwd() + d)
 
 from flask import Flask, jsonify, render_template, request
-from functions.api import initialize_api, search_cik_api, search_company_api
+from functions.api import initialize_api, search_cik_api, search_company_api, historical_10Q_api
 
 app = Flask(__name__, static_folder = "static")
 
@@ -30,7 +30,7 @@ def search_cik_result():
 
 @app.route("/search_company")
 def search_company():
-    return render_template("searchCompany.html", message = "Company Search")
+    return render_template("searchCompany.html", message = {'heading': 'Company Search', 'action': '/search_company_result'})
 
 @app.route("/search_company_result", methods= ['POST'])
 def search_company_result():
@@ -39,6 +39,16 @@ def search_company_result():
     if result['client_info'] is None or result['contact_info'] is None:
         return render_template("errorPage.html")
     return render_template("searchCompanyResult.html", client_info = result['client_info'], contact_info = result['contact_info'])
+
+@app.route("/historical_10Q")
+def historical_10Q():
+    return render_template("searchCompany.html", message = {'heading': 'Historical 10Q', 'action': '/historical_10Q_result'})
+
+@app.route("/historical_10Q_result", methods= ['POST'])
+def historical_10Q_result():
+    req = {key: value for key, value in request.form.items()}
+    result = historical_10Q_api(req['companyInput'], req['searchMethod'])
+    return render_template("historical_10Q_result.html", data = result, len = len(result['time']))
 
 if __name__ == '__main__':
     initialize_api()
