@@ -1,3 +1,4 @@
 .env
 countrycode.txt
 temp.py
+**/__pycache__
