@@ -7,7 +7,6 @@ th,
 td {
     height: 60px;
     max-width: 300px;
-    overflow: scroll;
 }
 
 .card {

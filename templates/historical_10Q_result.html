@@ -42,13 +42,13 @@
                 <tr>
                   <th 
                     class = "table-secondary table-bordered border-dark"
-                    style='height: 60px; width: 30rem; font-size: 15px; overflow:scroll;display: block'>Time</th>
+                    style='height: 60px; width: 30rem; font-size: 15px; overflow-y:scroll;display: block'>Time</th>
                 </tr>
                 {% for key in data['data'].keys() %}
                 <tr>
                   <th
                     class = "table-secondary table-bordered border-secondary"
-                    style='height: 60px; width: 30rem; font-size: 15px; overflow:scroll;display: block'>{{data['metadata'][key]['label']}}
+                    style='height: 60px; width: 30rem; font-size: 15px; overflow-y:scroll;display: block'>{{data['metadata'][key]['label']}}
                       <button type="button" style="border-radius:1rem;" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="{{data['metadata'][key]['description']}}">?</button>
                   </th>
                 </tr>
