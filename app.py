@@ -1,3 +1,5 @@
+#!/opt/homebrew/bin/python3.11
+
 import sys
 import os
 
