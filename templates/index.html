@@ -19,11 +19,7 @@
               <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Solutions
               </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="/search_cik">CIK lookup</a></li>
-                <li><a class="dropdown-item" href="/search_company">Company Facts</a></li>
-                <li><a class="dropdown-item" href="/historical_10Q">Historical 10Q</a></li>
-              </ul>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="dropdown_1"></ul>
             </li>
           </ul>
         </div>
@@ -32,4 +28,5 @@
     
     <h1>{{message}}</h1> 
   </body> 
+  <script src={{ url_for('static', filename='index.js') }}></script>
 </html> 
