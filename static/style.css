@@ -16,3 +16,7 @@ td {
 .main{
     padding: 20px;
 }
+
+.select-item:hover{
+    background-color: lightgray;
+}

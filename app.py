@@ -70,7 +70,7 @@ def sector_search():
     else:
         api_res = search_sector_api()
     return render_template("sectorSearch.html", message = "Sector Search", 
-                           category = api_res['opt'], result = api_res['res'], res_display = api_res['res_display'])
+                           category = api_res['opt'], result = api_res['res'], res_display = api_res['res_display'], ini_alert = api_res['ini_alert'])
 
 if __name__ == '__main__':
     initialize_api()
