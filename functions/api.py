@@ -1,5 +1,6 @@
 from functions.tenQ_report import get_ticker_cik_mapping, get_company_info_by_CIK, get_company_info_by_ticker, get_10Q_report_by_CIK, get_10Q_report_by_ticker
 from functions.cik_mapping import get_mapping
+from functions.data_wrangle import read_json, get_sector_options_results
 
 def initialize_api():
     print("Initializing data...")
@@ -25,3 +26,6 @@ def historical_10Q_api(company, search_method):
     else:
         historical_10Q = get_10Q_report_by_ticker(company)
     return historical_10Q
+
+def search_sector_api(filter_sector = "--"):
+    return get_sector_options_results(filter_sector=filter_sector)

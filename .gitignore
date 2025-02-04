@@ -1,4 +1,6 @@
 .env
 countrycode.txt
+sector_mapping.json
+fork.py
 temp.py
 **/__pycache__

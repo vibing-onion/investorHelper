@@ -89,7 +89,7 @@ def get_10Q_report_by_CIK(cik) -> dict:
         result = {"metadata": metadata, "data": {}}
         for key in metadata.keys():
             for k in data[key]['units'].keys():
-                record_list = [{'val': item['val'], 'fileDate': item['filed'], 'fyfp': str(item['fy']) + item['fp'][1], 'endDate': item['end']} for item in data[key]['units'][k] if item['form'] == "10-Q"]
+                record_list = [{'val': item['val'], 'fileDate': item['filed'], 'fyfp': str(item['fy']) + item['fp'][1], 'endDate': item['end']} for item in data[key]['units'][k] if item['form'] == "10-K"]
             record_list = historical_10Q_dw(pd.DataFrame(record_list))
             if len(record_list) < 4:
                 continue

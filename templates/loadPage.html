@@ -25,20 +25,8 @@
         </div>
       </div>
     </nav>
-    <form>
-      <h2 class="mb-3">
-        Company Facts
-      </h2>
-      <div style='display:flex;'>
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h3 style="text-decoration: underline;">Historical 10Q</h3>
-            
-            <a href="/search_company" class="btn btn-primary">Search again</a>
-          </div>
-        </div>
-      </div>
-    </form>
+    <h1>Load {{result}}</h1>
+    <button type="button" class="btn btn-primary" onclick="location.href='{{return_url}}'">Return</button>
   </body> 
   <script src={{ url_for('static', filename='index.js') }}></script>
 </html> 

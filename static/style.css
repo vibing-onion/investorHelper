@@ -12,3 +12,7 @@ td {
 .card {
     overflow: scroll;
 }
+
+.main{
+    padding: 20px;
+}
