@@ -35,20 +35,21 @@
         <div>
           <div class="alert alert-warning" id='ini_alert' style="display:{{ini_alert}};">First time use requires data initialization.</div>
         </div>
+        <div style='display:inline-block;'>
         <form action='/sector_search' method='POST' style="display:{{res_display}};">
           <label for="sicInput">Search by:</label>
           <button type="submit" class="btn btn-outline-dark">Search</button>
           <div style='margin:10px;'>
-            <input type="text" id="searchInput" style='margin-bottom:10px; width: 50%;' placeholder="Search" onkeypress="return event.keyCode != 13;">
+            <input type="text" id="searchInput" style='margin-bottom:10px;' placeholder="Search" onkeypress="return event.keyCode != 13;">
             <input type="text" id="sicInput" name="sicInput" style='display:none' value='--'>
-            <ul class="list-group" style='width: 50%; height: 30%; overflow-y: scroll;'>
+            <ul class="list-group" style='min-width: 60%; max-height: 30%; overflow-y: scroll;'>
               {% for opt in category %}
                 <li class="list-group-item select-item" value={{opt}}><p>{{opt}}</p></li>
               {% endfor %}
             </ul>
           </div>
         </form>
-        <div style="display:{{res_display}};">
+        <div id="res_table" style="display:{{res_display}};">
           <table class="table">
             <thead>
               <tr>
@@ -72,6 +73,7 @@
             </tbody>
           </table>
         </div>
+      </div>
     </div>
   </body> 
   <script src={{ url_for('static', filename='index.js') }}></script>

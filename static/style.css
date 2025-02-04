@@ -20,3 +20,10 @@ td {
 .select-item:hover{
     background-color: lightgray;
 }
+
+#res_table{
+    overflow: scroll;
+    min-width: 90%;
+    max-height: 50%;
+    padding-left: 30px;
+}

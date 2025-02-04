@@ -15,6 +15,7 @@ searchItem.forEach(i => {
 })
 
 const searchInput = document.getElementById('searchInput');
+searchInput.style.width = document.querySelector('.list-group').offsetWidth + 'px';
 searchInput.addEventListener('change', () => {
     s = document.getElementById('searchInput').value.toLowerCase()
     searchItem.forEach(i => {
