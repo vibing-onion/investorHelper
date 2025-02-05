@@ -1,6 +1,7 @@
 import json
 import numpy as np
 import multiprocessing
+import time
 from functions.tenQ_report import get_company_info_by_CIK
 
 def sub_task_load_sector_api(comp_list):

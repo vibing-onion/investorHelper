@@ -38,14 +38,14 @@ def get_sector_options_results(filter_sector = "--", filepath = "functions/data/
     try:
         filter_sector = filter_sector[0:3]
         data = pd.read_json(filepath)
-        data['sic'] = data['sic'].str[:-1]
-        d_opt = data.groupby('sic')['sicDescription'].apply(lambda x: ' | '.join(x.unique())).drop(['000',''])
+        data['sic_'] = data['sic'].str[:-1]
+        d_opt = data.groupby('sic_')['sicDescription'].apply(lambda x: ' | '.join(x.unique())).drop(['000',''])
         d_opt = pd.DataFrame([d_opt.index,d_opt]).T
         d_opt.columns = ['sic','sicDescription']
         
         return {
             "opt" : (d_opt['sic'] + '0 : ' + d_opt['sicDescription']).to_list(),
-            "res" : data[data['sic'] == filter_sector][["tickers", "name", "cik", 'sic', 'sicDescription']].values.tolist(),
+            "res" : data[data['sic_'] == filter_sector][["tickers", "name", "cik", 'sic', 'sicDescription']].sort_values('sic').values.tolist(),
             "res_display" : "inline-block",
             "ini_alert" : "none"
             }

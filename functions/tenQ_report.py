@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import pandas as pd
 from datetime import datetime
+import time
 
 from functions.data_wrangle import historical_10Q_dw, historical_10Q_merge
 
@@ -43,26 +44,33 @@ def get_company_info_by_CIK(cik) -> dict:
     if env_var["url"] is None or env_var["headers"] is None:
         return {"client_info": None, "contact_info": None}
     
-    try:
-        res = requests.get(env_var["url"], headers=env_var["headers"]).json()
-        client_info = {key: res[key] for key in [
-            "cik", "name", "sic", "sicDescription", "ownerOrg"
-        ]}
-        for key in ["tickers", "exchanges"]:
-            client_info[key] = ", ".join(list(set(res[key])))
-        contact_info = {
-            "mailing_address" : res['addresses']['mailing'],
-            "phone" : res['phone']
-        }
-        with open('functions/data/countrycode_mapping.json', 'r') as f:
-            countrycode = json.load(f)
-            f.close()
-        contact_info["mailing_address"]["Country_Region"] = countrycode[contact_info["mailing_address"]["stateOrCountry"]]
-        
-        return {"client_info": client_info, "contact_info": contact_info}
-    except:
-        print("Error in SEC API call, check API validity")
-        return {"client_info": None, "contact_info": None}
+    attempt = 0
+    max_attempt = 3
+    while attempt < max_attempt:
+        try:
+            res = requests.get(env_var["url"], headers=env_var["headers"]).json()
+            client_info = {key: res[key] for key in [
+                "cik", "name", "sic", "sicDescription", "ownerOrg"
+            ]}
+            for key in ["tickers", "exchanges"]:
+                client_info[key] = ", ".join(list(set(res[key])))
+            contact_info = {
+                "mailing_address" : res['addresses']['mailing'],
+                "phone" : res['phone']
+            }
+            with open('functions/data/countrycode_mapping.json', 'r') as f:
+                countrycode = json.load(f)
+                f.close()
+            contact_info["mailing_address"]["Country_Region"] = countrycode[contact_info["mailing_address"]["stateOrCountry"]]
+            
+            time.sleep(0.5)
+            return {"client_info": client_info, "contact_info": contact_info}
+        except:
+            attempt += 1
+            time.sleep(1)
+            if attempt == max_attempt:
+                print("Error in SEC API call, check API validity")
+                return {"client_info": None, "contact_info": None}
     
 def get_company_info_by_ticker(ticker) -> dict:
     cik_mapping = get_ticker_cik_mapping([ticker])
