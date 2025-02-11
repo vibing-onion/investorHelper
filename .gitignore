@@ -1,6 +1,11 @@
 .env
+.gitignore
 countrycode.txt
 sector_mapping.json
-fork.py
+rfr.json
+temp3.py
+temp2.py
 temp.py
+test.py
+model.py
 **/__pycache__

@@ -12,7 +12,7 @@ for d in dir:
     sys.path.insert(0, os.getcwd() + d)
 
 from flask import Flask, jsonify, render_template, request
-from functions.api import initialize_api, search_cik_api, search_company_api, historical_10Q_api, search_sector_api
+from functions.api import initialize_api, search_cik_api, search_company_api, historical_10Q_api, search_sector_api, sample_data_api
 from functions.data_load import load_sector_api
 
 app = Flask(__name__, static_folder = "static")
@@ -71,6 +71,10 @@ def sector_search():
         api_res = search_sector_api()
     return render_template("sectorSearch.html", message = "Sector Search", 
                            category = api_res['opt'], result = api_res['res'], res_display = api_res['res_display'], ini_alert = api_res['ini_alert'])
+
+@app.route("/sample_data")
+def sample_data():
+    return jsonify(sample_data_api())
 
 if __name__ == '__main__':
     initialize_api()

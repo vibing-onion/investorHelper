@@ -63,11 +63,11 @@ def get_company_info_by_CIK(cik) -> dict:
                 f.close()
             contact_info["mailing_address"]["Country_Region"] = countrycode[contact_info["mailing_address"]["stateOrCountry"]]
             
-            time.sleep(0.5)
+            time.sleep(0.3)
             return {"client_info": client_info, "contact_info": contact_info}
         except:
             attempt += 1
-            time.sleep(1)
+            time.sleep(0.5)
             if attempt == max_attempt:
                 print("Error in SEC API call, check API validity")
                 return {"client_info": None, "contact_info": None}
@@ -78,7 +78,7 @@ def get_company_info_by_ticker(ticker) -> dict:
         return {"client_info": None, "contact_info": None}
     return get_company_info_by_CIK(cik_mapping["ticker"])
 
-def get_10Q_report_by_CIK(cik) -> dict:
+def get_report_by_CIK(cik, reportType=["10-Q", "10-K"]) -> dict:
     env_var = load_env(api = "https://data.sec.gov/api/xbrl/companyfacts/", cik = cik)
     if env_var["url"] is None or env_var["headers"] is None:
         print("Error in loading environment variables, check .env file")
@@ -87,6 +87,8 @@ def get_10Q_report_by_CIK(cik) -> dict:
     try:
         res = requests.get(env_var["url"], headers=env_var["headers"]).json()
         data = res['facts']['us-gaap']
+        dei = res['facts']['dei'] if "dei" in res['facts'].keys() else None
+        market_val = dei['EntityPublicFloat'] if dei is not None and "EntityPublicFloat" in dei.keys() else None
         metadata = {
             key: {
                 "label": data[key]["label"],
@@ -97,22 +99,30 @@ def get_10Q_report_by_CIK(cik) -> dict:
         result = {"metadata": metadata, "data": {}}
         for key in metadata.keys():
             for k in data[key]['units'].keys():
-                record_list = [{'val': item['val'], 'fileDate': item['filed'], 'fyfp': str(item['fy']) + item['fp'][1], 'endDate': item['end']} for item in data[key]['units'][k] if item['form'] == "10-K"]
+                record_list = [{'val': item['val'], 'fileDate': item['filed'], 'fyfp': str(item['fy']) + item['fp'][1], 'endDate': item['end']} for item in data[key]['units'][k] if item['form'] in reportType]
             record_list = historical_10Q_dw(pd.DataFrame(record_list))
             if len(record_list) < 4:
                 continue
             result["data"][key] = record_list
+        if market_val is not None:
+            result['metadata']["EntityPublicFloat"] = {'label': market_val['label'], 'description': market_val["description"]}
+            result['data']["EntityPublicFloat"] = historical_10Q_dw(
+                pd.DataFrame([
+                    {'val': item['val'], 'fileDate': item['filed'], 'fyfp': str(item['fy']) + str(4), 'endDate': item['end']} 
+                    for item in market_val['units']['USD'] if item['form'] == '10-K'
+                ])
+            )
         result['data'], result['time'] = historical_10Q_merge(result['data'])
         
-        print("10Q report loaded -- SUCCESS")
+        print(f"{reportType} report loaded -- SUCCESS")
         return result
     
     except:
         print("Error in SEC API call, check API validity")
         return {}
 
-def get_10Q_report_by_ticker(ticker) -> dict:
+def get_report_by_ticker(ticker, reportType="10-Q") -> dict:
     cik_mapping = get_ticker_cik_mapping([ticker])
     if cik_mapping["ticker"] is None:
         return {}
-    return get_10Q_report_by_CIK(cik_mapping["ticker"])
+    return get_report_by_CIK(cik_mapping["ticker"], reportType=reportType)

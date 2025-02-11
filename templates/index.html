@@ -24,9 +24,16 @@
           </ul>
         </div>
       </div>
-    </nav>
-    
-    <h1>{{message}}</h1> 
+    </nav> 
+    <div class="main">
+      <div style='text-align: center'>
+        <h1 style='margin-top: 2%'>investorHelper</h1>
+        <p>Help you find the right picks.</p>
+        <div id='indexChart' style="width:60%; height:50%; margin:auto"></div>
+      </div>
+    </div>
   </body> 
   <script src={{ url_for('static', filename='index.js') }}></script>
+  <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+  <script src={{ url_for('static', filename='indexChart.js') }}></script>
 </html> 
