@@ -75,7 +75,7 @@ def get_company_info_by_ticker(ticker) -> dict:
         return {"client_info": None, "contact_info": None}
     return get_company_info_by_CIK(cik_mapping["ticker"])
 
-def get_report_by_CIK(cik, reportType=["10-Q", "10-K"]) -> dict:
+def get_report_by_CIK(cik, reportType=["10-Q"]) -> dict:
     env_var = load_env(api = "https://data.sec.gov/api/xbrl/companyfacts/", cik = cik)
     if env_var["url"] is None or env_var["headers"] is None:
         print("Error in loading environment variables, check .env file")
@@ -84,8 +84,6 @@ def get_report_by_CIK(cik, reportType=["10-Q", "10-K"]) -> dict:
     try:
         res = requests.get(env_var["url"], headers=env_var["headers"]).json()
         data = res['facts']['us-gaap']
-        dei = res['facts']['dei'] if "dei" in res['facts'].keys() else None
-        market_val = dei['EntityPublicFloat'] if dei is not None and "EntityPublicFloat" in dei.keys() else None
         metadata = {
             key: {
                 "label": data[key]["label"],
@@ -101,14 +99,6 @@ def get_report_by_CIK(cik, reportType=["10-Q", "10-K"]) -> dict:
             if len(record_list) < 4:
                 continue
             result["data"][key] = record_list
-        if market_val is not None:
-            result['metadata']["EntityPublicFloat"] = {'label': market_val['label'], 'description': market_val["description"]}
-            result['data']["EntityPublicFloat"] = historical_10Q_dw(
-                pd.DataFrame([
-                    {'val': item['val'], 'fileDate': item['filed'], 'fyfp': str(item['fy']) + str(4), 'endDate': item['end']} 
-                    for item in market_val['units']['USD'] if item['form'] == '10-K'
-                ])
-            )
         result['data'], result['time'] = historical_10Q_merge(result['data'])
         
         print(f"{reportType} report loaded -- SUCCESS")
