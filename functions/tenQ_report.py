@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import os
 import pandas as pd
 from datetime import datetime
-import time
 
 from functions.data_wrangle import historical_10Q_dw, historical_10Q_merge
 
@@ -45,7 +44,7 @@ def get_company_info_by_CIK(cik) -> dict:
         return {"client_info": None, "contact_info": None}
     
     attempt = 0
-    max_attempt = 3
+    max_attempt = 1
     while attempt < max_attempt:
         try:
             res = requests.get(env_var["url"], headers=env_var["headers"]).json()
@@ -63,11 +62,9 @@ def get_company_info_by_CIK(cik) -> dict:
                 f.close()
             contact_info["mailing_address"]["Country_Region"] = countrycode[contact_info["mailing_address"]["stateOrCountry"]]
             
-            time.sleep(0.3)
             return {"client_info": client_info, "contact_info": contact_info}
         except:
             attempt += 1
-            time.sleep(0.5)
             if attempt == max_attempt:
                 print("Error in SEC API call, check API validity")
                 return {"client_info": None, "contact_info": None}
