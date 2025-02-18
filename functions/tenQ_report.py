@@ -91,15 +91,18 @@ def get_report_by_CIK(cik, reportType=["10-Q"]) -> dict:
             }
             for key in data.keys()
         }
-        result = {"metadata": metadata, "data": {}}
+        result = {"metadata": metadata, "data": {}, "fileDate": {}}
         for key in metadata.keys():
             for k in data[key]['units'].keys():
                 record_list = [{'val': item['val'], 'fileDate': item['filed'], 'fyfp': str(item['fy']) + item['fp'][1], 'endDate': item['end']} for item in data[key]['units'][k] if item['form'] in reportType]
-            record_list = historical_10Q_dw(pd.DataFrame(record_list))
+            record_list, file_date_list = historical_10Q_dw(pd.DataFrame(record_list))
             if len(record_list) < 4:
                 continue
             result["data"][key] = record_list
-        result['data'], result['time'] = historical_10Q_merge(result['data'])
+            result["fileDate"][key] = file_date_list
+        print(f"{reportType} report loaded -- SUCCESS")
+        result['data'], result['time'] = historical_10Q_merge(result['data'], result['fileDate'])
+        result['metadata']['fileDate'] = {"label": "Filed Date", "description": "The last release date of the filing."}
         
         print(f"{reportType} report loaded -- SUCCESS")
         return result

@@ -2,16 +2,16 @@ import pandas as pd
 import json
 import os
 
-def historical_10Q_dw(df) -> dict:
+def historical_10Q_dw(df):
     if df.empty:
-        return df
+        return {}, {}
     df[['fileDate', 'endDate']] = df[['fileDate', 'endDate']].apply(pd.to_datetime)
     df = df.sort_values(by=['fileDate', 'endDate'])
     df = df.drop_duplicates(subset='fileDate', keep='last')
     df.index = df['fyfp']
-    return df['val'].to_dict()
+    return df['val'].to_dict(), df['fileDate'].to_dict()
 
-def historical_10Q_merge(data):
+def historical_10Q_merge(data, fileDate):
     col_name = data.keys()
     data = (pd.concat([pd.Series(data[key]) for key in data.keys()], axis=1))
     data = data.fillna('--')
@@ -19,6 +19,11 @@ def historical_10Q_merge(data):
     data = data.sort_index()
     idx = data.index.astype(str)
     data.index = idx.str[:-1] + ' Q' + idx.str[-1]
+    
+    fileDate = pd.concat([pd.Series(fileDate[key]) for key in fileDate.keys()]).sort_values().drop_duplicates(keep='last').astype(str).to_frame(name='fileDate')
+    fileDateIdx = fileDate.index.astype(str)
+    fileDate.index = fileDateIdx.str[:-1] + ' Q' + fileDateIdx.str[-1]
+    data = pd.merge(data, fileDate, left_index=True, right_index=True, how='inner')
     
     return data.to_dict(), list(data.index)
 
