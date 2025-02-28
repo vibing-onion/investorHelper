@@ -1,8 +1,10 @@
 import json
+import pandas as pd
 import numpy as np
 import multiprocessing
 import time
 import yfinance as yf
+from functions.helper.alt_yfinance.download import yf_download_alt
 from functions.tenQ_report import get_company_info_by_CIK
 from functions.helper.self_rate_limiter.rate_limiter import rate_limited_multiprocessing
 
@@ -31,10 +33,13 @@ def load_sector_api():
     
 def sample_data_load():
     try:
-        data = yf.download('^SPX COST', start = '2023-01-01', end='2024-12-31')['Close']
-        data.index = data.index.strftime('%Y-%m-%d')
+        data = pd.merge(
+                    yf_download_alt('^SPX', start = '2023-01-01', end='2024-12-31'),
+                    yf_download_alt('COST', start = '2023-01-01', end='2024-12-31'),
+                    on='Date', suffixes=('SPX', 'COST')
+                )
         data['Time'] = data.index
-        data.columns = ['SPX', 'NASDAQ', 'Time']
+        data.columns = ['SPX', 'COST', 'Time']
         for c in data.columns[:-1]:
             data[c] = data[c]/data[c][0]
         data = data.values.tolist()

@@ -9,3 +9,4 @@ temp.py
 test.py
 model.py
 **/__pycache__
+**/functions/data/rawDataSet
