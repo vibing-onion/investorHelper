@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Navbar from './components/Navbar';
+import MainContent from './components/MainContent';
 
 function App() {
-  const [message, setMessage] = useState('');
-
   return (
     <div>
-      <h1>React + Flask App</h1>
-      <p>Backend says: {message}</p>
+      <Navbar />
+      <MainContent />
     </div>
   );
 }
