@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 function Navbar() {
   const [solutions, setSolutions] = useState([]);
 
-  useEffect(() => {
-    // Fetch solutions data from Flask backend
-    fetch('http://backend:5000/api/solutions')
-      .then((response) => response.json())
-      .then((data) => setSolutions(data.solutions))
-      .catch((error) => console.error('Error fetching solutions:', error));
-  }, []);
+  // useEffect(() => {
+  //   // Fetch solutions data from Flask backend
+  //   fetch('http://backend:5000/api/solutions')
+  //     .then((response) => response.json())
+  //     .then((data) => setSolutions(data.solutions))
+  //     .catch((error) => console.error('Error fetching solutions:', error));
+  // }, []);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,13 +30,13 @@ function Navbar() {
               >
                 Solutions
               </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="dropdown_1">
+              {/* <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="dropdown_1">
                 {solutions.map((solution, index) => (
                   <li key={index}>
                     <a className="dropdown-item" href={solution.link}>{solution.name}</a>
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </li>
           </ul>
         </div>

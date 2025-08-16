@@ -1,5 +1,5 @@
 # Use official Node.js image
-FROM node:18
+FROM node:22
 
 # Set working directory
 WORKDIR /app
@@ -15,5 +15,6 @@ COPY . .
 EXPOSE 3000
 
 # Start React app
-CMD ["npm", "run", "build"]
-CMD ["npm", "run", "preview"]
+# CMD ["npm", "run", "build"]
+# CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "dev"]
