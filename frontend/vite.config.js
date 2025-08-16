@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
+import { resolve } from 'path'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
 	server: { 
     host: '0.0.0.0',
@@ -9,9 +9,21 @@ export default defineConfig({
   },
   preview: { port: 8080 },
   plugins: [react()],
-  root: './',
+  root: resolve(__dirname, 'src'),
   publicDir: 'public',
   build: {
     outDir: 'build',
   },
+  css: {
+    preprocessorOptions: {
+       scss: {
+         silenceDeprecations: [
+           'import',
+           'mixed-decls',
+           'color-functions',
+           'global-builtin',
+         ],
+       },
+    },
+ },
 })

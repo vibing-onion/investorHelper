@@ -7,6 +7,9 @@ function Chart() {
     const chart = new CanvasJSReact.Chart('indexChart', {
       animationEnabled: true,
       title: { text: '' },
+      axisY:{
+        valueFormatString: "##.##%",
+      },
       data: [
         {
           indexLabelFontColor: "darkSlateGray",
