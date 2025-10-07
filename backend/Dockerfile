@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install uv and dependencies
-RUN pip install uv && uv pip install --system -r requirements.txt
+RUN pip install uv && uv venv && uv pip install --system -r requirements.txt
 
 # Copy app code
 COPY . .
