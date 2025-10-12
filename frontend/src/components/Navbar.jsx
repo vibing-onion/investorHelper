@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'jquery/dist/jquery.min.js'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
 function Navbar() {
-  const [solutions, setSolutions] = useState([]);
-
-  useEffect(() => {
-    // Fetch solutions data from Flask backend
-    fetch('http://localhost:5000/api/v1/solutions')
-      .then((response) => response.json())
-      .then((data) => setSolutions(data.solutions))
-      .catch((error) => console.error('Error fetching solutions:', error));
-  }, []);
+  let solutions = [
+    { name: 'Company Sector', link: '/company_sector' },
+    { name: 'Company Info', link: '/company_info' },
+  ]
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -32,11 +29,8 @@ function Navbar() {
                 Solutions
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="dropdown_1">
-                {solutions.map((solution, index) => (
-                  <li key={index}>
-                    <a className="dropdown-item" href={solution.link}>{solution.name}</a>
-                  </li>
-                ))}
+              <li><a className="dropdown-item" href={solutions[0].link}>{solutions[0].name}</a></li>
+              <li><a className="dropdown-item" href={solutions[1].link}>{solutions[1].name}</a></li>
               </ul>
             </li>
           </ul>

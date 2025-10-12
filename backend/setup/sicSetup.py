@@ -83,10 +83,6 @@ def getSector():
         with open(export_path_sector, 'w') as f:
             json.dump(sector, f)
             f.close()
-        with open(export_path_sector, 'r') as f:
-            temp = json.load(f)
-            print(f"temp {temp}")
-            f.close()
         
         print("Load sector_mapping.json -- SUCCESS")
         return

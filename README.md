@@ -5,6 +5,14 @@ InvestorHelper is a locally hosted app to help investors reading 10Q reports of 
 Under revamp. 
 
 ### Quick Start:
+
+Method 1:
+
+Create docker image & container in the repo directory<br />
+`docker compose up --build`<br />
+
+Method 2:
+
 Change directory to backend<br />
 `cd backend`
 Create docker image & container for backend & Run it<br />

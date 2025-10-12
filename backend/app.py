@@ -8,7 +8,7 @@ dir = [
 
 from flask import Flask, jsonify
 from flask_cors import CORS
-from functions.api import sample_data_api, ticker_list_api
+from functions.api import sample_data_api, ticker_list_api, sector_data_api
 
 from setup.mainSetup import masterSetup
 
@@ -25,9 +25,9 @@ def testapi():
 def home():
     return jsonify(sample_data_api())
 
-# @app.route("/api/v1/company", methods=["GET"])
-# def companyInfo():
-#     return jsonify(sample_data_api())
+@app.route("/api/v1/companySectorList", methods=["GET"])
+def getCompanySectorList():
+    return jsonify(sector_data_api())
 
 @app.route("/api/v1/companyData/", methods=["GET"])
 def companyInfoDefault():

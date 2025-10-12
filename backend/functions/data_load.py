@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 from functions.helper.alt_yfinance.download import yf_download_alt
 
 def sample_data_load():
@@ -17,4 +18,14 @@ def sample_data_load():
         return data
     except:
         print("Error in loading sample data. Please report to the development team.")
+        return {}
+
+def sector_data_load():
+    try:
+        with open('data/sector_mapping.json', 'r') as f:
+            sector_data = json.load(f)
+            f.close()
+        return sector_data
+    except:
+        print("Error in loading sector data. Please report to the development team.")
         return {}

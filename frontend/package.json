@@ -12,8 +12,10 @@
   "dependencies": {
     "@canvasjs/charts": "^3.13.4",
     "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.7",
+    "bootstrap": "^5.3.8",
+    "jquery": "^3.7.1",
     "npm": "^11.5.2",
+    "popper.js": "^1.16.1",
     "react": "^19.1.1",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.1",
