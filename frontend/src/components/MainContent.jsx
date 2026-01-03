@@ -1,5 +1,5 @@
 import React from 'react';
-import Chart from './Chart';
+import HomePageChart from './HomePageChart';
 
 function MainContent() {
   return (
@@ -7,7 +7,7 @@ function MainContent() {
       <div style={{ textAlign: 'center' }}>
         <h1 style={{ marginTop: '2%' }}>investorHelper</h1>
         <p>Help you find the right picks.</p>
-        <Chart />
+        <HomePageChart />
       </div>
     </div>
   );

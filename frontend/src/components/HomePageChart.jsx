@@ -1,7 +1,7 @@
 import React, { useEffect, Component } from 'react';
 import CanvasJSReact from '@canvasjs/charts';
 
-function Chart() {
+function HomePageChart() {
   useEffect(() => {
     // Initialize CanvasJS chart
     const chart = new CanvasJSReact.Chart('indexChart', {
@@ -65,4 +65,4 @@ function Chart() {
   return <div id="indexChart" style={{ width: '60%', height: '50%', margin: 'auto' }} />;
 }
 
-export default Chart;
+export default HomePageChart;

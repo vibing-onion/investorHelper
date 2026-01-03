@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@canvasjs/charts": "^3.13.4",
+    "@canvasjs/charts": "^3.15.2",
+    "@canvasjs/react-charts": "^1.0.2",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.8",
     "jquery": "^3.7.1",

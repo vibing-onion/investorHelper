@@ -54,7 +54,7 @@ def get_mapping():
             for key, val in res.items()
         }
         print("Load CIK-Ticker Mapping -- start")
-        usualTickers = (rate_limited_multiprocessing(getUsualTicker, [{'cik': str(val['cik_str']).zfill(10), 'ticker': val['ticker'], 'company_name': val['title'], 'headers': headers} for key, val in res.items()][:5]))
+        usualTickers = (rate_limited_multiprocessing(getUsualTicker, [{'cik': str(val['cik_str']).zfill(10), 'ticker': val['ticker'], 'company_name': val['title'], 'headers': headers} for key, val in res.items()][:20]))
         
         print("CIK-Ticker Mapping creation -- SUCCESS")
     except:
@@ -66,12 +66,12 @@ def get_mapping():
         os.makedirs(setup_abs_dir)
     
     try:
-        if os.path.exists(export_path):
-            os.chmod(export_path, 0o755)        
+        # if os.path.exists(export_path):
+        #     os.chmod(export_path, 0o755)        
         with open(export_path, 'w') as f:
             json.dump(list(usualTickers), f)
             f.close()
-        os.chmod(export_path, 0o444)
+        # os.chmod(export_path, 0o444)
     except:
         print("Error in writing to mapping json")
         return

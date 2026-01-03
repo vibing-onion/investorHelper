@@ -13,6 +13,9 @@ export default defineConfig({
   publicDir: 'public',
   build: {
     outDir: 'build',
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
   },
   css: {
     preprocessorOptions: {
