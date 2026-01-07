@@ -8,7 +8,7 @@ dir = [
 
 from flask import Flask, jsonify
 from flask_cors import CORS
-from functions.api import sample_data_api, ticker_list_api, sector_data_api, dashboard_data_api
+from functions.api import sample_data_api, ticker_list_api, sic_info_api, dashboard_data_api, sector_data_api, fin_report_api
 
 from setup.mainSetup import masterSetup
 
@@ -33,9 +33,13 @@ def getDashboardData(dataCategory, dataName, BATCH_RETRIEVE):
 def getCompanySectorList():
     return jsonify(sector_data_api())
 
-@app.route("/api/v1/companyData/", methods=["GET"])
+@app.route("/api/v1/companyInfo/", methods=["GET"])
 def companyInfoDefault():
-    return jsonify(ticker_list())
+    return jsonify(sic_info_api())
+
+@app.route("/api/v1/companyInfo/<string:ticker>/", methods=["GET"])
+def companyInfoSpecific(ticker):
+    return jsonify(fin_report_api(ticker))
 
 @app.route("/api/v1/companyData/<string:dataCategory>/<string:ticker>/", methods=["POST"])
 def companyInfo(dataCategory, ticker):

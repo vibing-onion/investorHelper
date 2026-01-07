@@ -20,12 +20,12 @@ def sample_data_load():
         print("Error in loading sample data. Please report to the development team.")
         return {}
 
-def sector_data_load():
+def sic_info_load():
     try:
         with open('data/sector_mapping.json', 'r') as f:
-            sector_data = json.load(f)
+            sic_data = json.load(f)
             f.close()
-        return sector_data
+        return sic_data
     except:
         print("Error in loading sector data. Please report to the development team.")
         return {}

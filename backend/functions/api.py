@@ -1,6 +1,6 @@
-from functions.data_load import sample_data_load, sector_data_load
+from functions.data_load import sample_data_load, sic_info_load
 from functions.third_party_data import third_party_api
-from functions.edgardata import getStatements
+from functions.edgardata import timed_financial_statement_api
 
 def sample_data_api():
     return sample_data_load()
@@ -8,8 +8,15 @@ def sample_data_api():
 def ticker_list_api():
     return ticker_list
 
+def sic_info_api():
+    return sic_info_load()
+
 def sector_data_api():
-    return sector_data_load()
+    sic_info = sic_info_load()
+    return sic_info
+
+def fin_report_api(ticker):
+    return timed_financial_statement_api(ticker)
 
 def dashboard_data_api(dataCategory, dataName, BATCH_RETRIEVE = False):
     thirdPartyData = ['FRED',]
